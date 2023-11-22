@@ -2,11 +2,6 @@
 using MonefyWeb.Application.ModelsWebPage.Models;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Contracts;
 using MonefyWeb.DomainServices.DomainWebPage.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
 {

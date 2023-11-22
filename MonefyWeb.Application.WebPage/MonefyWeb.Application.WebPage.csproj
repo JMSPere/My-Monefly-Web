@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MonefyWeb.Application.ModelsWebPage\MonefyWeb.Application.ModelsWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.ApplicationServices.ApplicationWebPage\MonefyWeb.ApplicationServices.ApplicationWebPage.csproj" />
-    <ProjectReference Include="..\MonefyWeb.DistributedServices.Models\MonefyWeb.DistributedServices.Models.csproj" />
   </ItemGroup>
 
 </Project>

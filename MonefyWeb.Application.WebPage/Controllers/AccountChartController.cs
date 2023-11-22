@@ -6,7 +6,6 @@ using MonefyWeb.DistributedServices.Models.Models.Categories;
 using MonefyWeb.DistributedServices.Models.Models.Movements;
 using MonefyWeb.Transversal.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
@@ -44,7 +43,7 @@ namespace MonefyWeb.Application.WebPage.Controllers
                 _memoryCache.TryGetValue<long>("AccountId", out var accountId))
             {
                 var chartPoco = _application.GetChartData(userId, accountId);
-                
+
                 var httpClient = _httpClientFactory.CreateClient();
                 var GetCategories = $"https://localhost:7006/api/{apiVersion}/Category/GetCategoriesByUserId?UserId={userId}";
                 var PostMovements = $"https://localhost:7006/api/{apiVersion}/Account/GetMovementsByAccountId?AccountId={accountId}";
@@ -157,7 +156,7 @@ namespace MonefyWeb.Application.WebPage.Controllers
                 var PostMovements = $"https://localhost:7006/api/{apiVersion}/Account/AddMovementToAccount";
 
                 var addMovementToAccountResponse = await httpClient.PostAsync(PostMovements, jsonContent);
-                
+
                 if (addMovementToAccountResponse.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");

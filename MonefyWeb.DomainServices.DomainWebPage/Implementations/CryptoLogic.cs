@@ -51,14 +51,14 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
 
                 int i = 1;
                 var todayTimeSeries = GetTimeSeriesByDay(DateTime.Today, response);
-                while(todayTimeSeries == null)
+                while (todayTimeSeries == null)
                 {
                     todayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
                     i++;
                 }
 
                 var yesterdayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
-                while(yesterdayTimeSeries == null)
+                while (yesterdayTimeSeries == null)
                 {
                     i++;
                     yesterdayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
@@ -111,7 +111,7 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
                 {
                     var alphaVantageResponse = await _alphaVantage.GetCryptoCurrencyData(ECryptoCurrency.BTC + i);
                     var lastTwoDays = GetLastTwoDays(alphaVantageResponse);
-                    if(lastTwoDays == null)
+                    if (lastTwoDays == null)
                     {
                         continue;
                     }
