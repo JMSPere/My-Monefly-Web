@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MonefyWeb.Infraestructure.RepositoryWebPage\MonefyWeb.Infraestructure.RepositoryWebPage.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.WebMappers\MonefyWeb.Transversal.WebMappers.csproj" />
+  </ItemGroup>
+
+</Project>

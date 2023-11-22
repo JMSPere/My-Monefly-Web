@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MonefyWeb.Application.ModelsWebPage\MonefyWeb.Application.ModelsWebPage.csproj" />
+    <ProjectReference Include="..\MonefyWeb.DomainServices.ModelsWebPage\MonefyWeb.DomainServices.ModelsWebPage.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Monefy Web";
+    var jsonCrypto = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Crypto);
+}
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Currency</th>
+                <th>Price</th>
+                <th>Modified by</th>
+                <th>Open Value</th>
+                <th>Close Value</th>
+                <th>Market Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cryptoData in ViewBag.Crypto)
+            {
+                <tr>
+                    <td>
+                        <h3>@cryptoData.CurrencyName</h3>
+                        <p>@cryptoData.CurrencyCode</p>
+                        <img src="https://www.cryptomkt.com/static/landing/img/icons/@(cryptoData.CurrencyCode).svg" height="30px" width="30px">
+                    </td>
+                    <td>
+                        @if (cryptoData.PriceHasRisen)
+                        {
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIm68lG9cnKN1jgYeBHW7uM3KdiBMKRWeuM4lT18gzzJzP5GmqD5JNB73NaNZCvaLpIM&usqp=CAU" height="15px" width="15px" alt="" class="@(cryptoData.PriceHasRisen ? "green" : "")">
+                            <span class="green" style="color: green;">@cryptoData.Price</span>
+                        }
+                        else
+                        {
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRxUb9lG88fZq41BSM0kEfm0Ncr-n4ZEULN2zoMPH-6jsR2wBo09edrNDDpMxYr7wR-ng&usqp=CAU" height="15px" width="15px" alt="" class="@(cryptoData.PriceHasRisen ? "green" : "")">
+                            <span class="red" style="color: red;">@cryptoData.Price</span>
+                        }
+                    </td>
+                    <td>
+                        @if (cryptoData.PriceHasRisen)
+                        {
+                            <span class="green" style="color: green;">+@cryptoData.CurrencyChanged%</span>
+                        }
+                        else
+                        {
+                            <span class="red" style="color: red;">-@cryptoData.CurrencyChanged%</span>
+                        }
+                    </td>
+                    <td>@cryptoData.OpenValue</td>
+                    <td>@cryptoData.CloseValue</td>
+                    <td>@cryptoData.MarketCode</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

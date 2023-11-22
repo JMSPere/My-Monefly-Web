@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MonefyWeb.Application.WebPage\MonefyWeb.Application.WebPage.csproj" />
+    <ProjectReference Include="..\MonefyWeb.DistributedServices.WebApi\MonefyWeb.DistributedServices.WebApi.csproj" />
+    <ProjectReference Include="..\MonefyWeb.DomainServices.Domain\MonefyWeb.DomainServices.Domain.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Infraestructure.Repository\MonefyWeb.Infraestructure.Repository.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.Aspects\MonefyWeb.Transversal.Aspects.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.Exceptions\MonefyWeb.Transversal.Exceptions.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.Models\MonefyWeb.Transversal.Models.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.Utils\MonefyWeb.Transversal.Utils.csproj" />
+  </ItemGroup>
+
+</Project>
