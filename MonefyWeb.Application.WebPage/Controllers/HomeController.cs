@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using MonefyWeb.Application.WebPage.Models;
-using System.Diagnostics;
 
 namespace MonefyWeb.Application.WebPage.Controllers
 {
@@ -10,6 +10,8 @@ namespace MonefyWeb.Application.WebPage.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
 
         private readonly string apiVersion = "v2";
+        private readonly string baseUrl = "https://moneflyapi.azurewebsites.net/api/";
+        // private readonly string baseUrl = "https://localhost:7006/api/";
 
         public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
         {

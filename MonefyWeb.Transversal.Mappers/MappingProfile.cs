@@ -6,7 +6,7 @@ namespace MonefyWeb.Transversal.Mappers
     {
         public MappingProfile()
         {
-            
+
         }
     }
 }

@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\MonefyWeb.DomainServices.RepositoryContracts\MonefyWeb.DomainServices.RepositoryContracts.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.WebModels\MonefyWeb.Transversal.WebModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,12 +1,10 @@
-﻿namespace MonefyWeb.Infraestructure.ServiceAgentsWebPage
-{
-    using System;
-    using System.Net.Http;
-    using System.Text;
-    using System.Text.Json;
-    using System.Threading.Tasks;
+﻿using System.Text;
+using System.Text.Json;
+using MonefyWeb.DomainServices.RepositoryContracts.Contracts;
 
-    public class ApiServiceAgent
+namespace MonefyWeb.Infraestructure.ServiceAgentsWebPage.Implementations
+{
+    public class ApiServiceAgent : IApiServiceAgent
     {
         private readonly HttpClient httpClient;
 
@@ -15,14 +13,11 @@
             httpClient = new HttpClient();
         }
 
-        public async Task<string> RealizarSolicitudGetAsync(string apiUrl, Dictionary<string, string> parametros)
+        public async Task<string> GetApiAsync(string apiUrl)
         {
             try
             {
-                string queryString = string.Join("&", parametros.Select(p => $"{p.Key}={Uri.EscapeDataString(p.Value)}"));
-                string urlCompleta = $"{apiUrl}?{queryString}";
-
-                HttpResponseMessage response = await httpClient.GetAsync(urlCompleta);
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -40,7 +35,7 @@
             return null;
         }
 
-        public async Task<string> RealizarSolicitudPostAsync(string apiUrl, object data)
+        public async Task<string> PostApiAsync(string apiUrl, object data)
         {
             try
             {

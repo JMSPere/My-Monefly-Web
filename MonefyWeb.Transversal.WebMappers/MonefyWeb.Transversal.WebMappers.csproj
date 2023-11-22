@@ -12,8 +12,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MonefyWeb.Application.ModelsWebPage\MonefyWeb.Application.ModelsWebPage.csproj" />
+    <ProjectReference Include="..\MonefyWeb.ApplicationServices.Models\MonefyWeb.ApplicationServices.Models.csproj" />
     <ProjectReference Include="..\MonefyWeb.DomainServices.ModelsWebPage\MonefyWeb.DomainServices.ModelsWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.WebModels\MonefyWeb.Transversal.WebModels.csproj" />
   </ItemGroup>
 
 </Project>

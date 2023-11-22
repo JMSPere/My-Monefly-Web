@@ -9,6 +9,10 @@ public class CryptoViewerController : Controller
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ICryptoAppService _cryptoAppService;
 
+    private readonly string apiVersion = "v2";
+    private readonly string baseUrl = "https://moneflyapi.azurewebsites.net/api/";
+    // private readonly string baseUrl = "https://localhost:7006/api/";
+
     public CryptoViewerController(IMemoryCache memoryCache, IHttpClientFactory httpClientFactory, ICryptoAppService cryptoAppService)
     {
         _memoryCache = memoryCache;
