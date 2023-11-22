@@ -1,9 +1,9 @@
 ﻿using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
-using StackExchange.Redis;
+using MonefyWeb.Infrastructure.DataModels.Response;
+using MonefyWeb.Utils.ServiceAgents;
 using NRedisStack;
 using NRedisStack.RedisStackCommands;
-using MonefyWeb.Utils.ServiceAgents;
-using MonefyWeb.Infrastructure.DataModels.Response;
+using StackExchange.Redis;
 
 namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
 {

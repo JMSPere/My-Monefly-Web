@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MonefyWeb.Infraestructure.ServiceAgentsWebPage\MonefyWeb.Infraestructure.ServiceAgentsWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.WebModels\MonefyWeb.Transversal.WebModels.csproj" />
     <ProjectReference Include="..\MonefyWeb.Utils.ServiceAgents\MonefyWeb.Utils.ServiceAgents.csproj" />

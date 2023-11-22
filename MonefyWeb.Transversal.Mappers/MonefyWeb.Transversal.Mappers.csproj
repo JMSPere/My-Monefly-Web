@@ -11,9 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MonefyWeb.DistributedServices.Models\MonefyWeb.DistributedServices.Models.csproj" />
-    <ProjectReference Include="..\MonefyWeb.DomainServices.Models\MonefyWeb.DomainServices.Models.csproj" />
-    <ProjectReference Include="..\MonefyWeb.Infraestructure.Repository\MonefyWeb.Infraestructure.Repository.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.Models\MonefyWeb.Transversal.Models.csproj" />
   </ItemGroup>
 

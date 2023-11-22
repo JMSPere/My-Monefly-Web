@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MonefyWeb.Application.ModelsWebPage\MonefyWeb.Application.ModelsWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.DomainServices.DomainWebPage\MonefyWeb.DomainServices.DomainWebPage.csproj" />
   </ItemGroup>
 

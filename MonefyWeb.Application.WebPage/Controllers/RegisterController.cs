@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Caching.Memory;
 using MonefyWeb.Application.WebPage.Models;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Contracts;
-using MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations;
-using MonefyWeb.DistributedServices.Models.Models.Users;
 using Newtonsoft.Json;
 using System.Text;
 

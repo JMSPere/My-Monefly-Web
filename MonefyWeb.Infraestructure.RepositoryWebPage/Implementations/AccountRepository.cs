@@ -1,11 +1,5 @@
-﻿using MonefyWeb.Application.ModelsWebPage.Models;
-using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
+﻿using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
 using MonefyWeb.Infraestructure.ServiceAgentsWebPage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
 {
