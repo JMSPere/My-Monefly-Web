@@ -9,12 +9,10 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
     public class UserDomain : IUserDomain
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
 
-        public UserDomain(IUserRepository userRepository, IMapper _mapper)
+        public UserDomain(IUserRepository userRepository)
         {
             this._userRepository = userRepository;
-            this._mapper = _mapper;
         }
 
         public async Task<UserLoginResponseDto> Login(LoginRequestDto request)

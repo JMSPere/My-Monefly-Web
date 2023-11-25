@@ -13,6 +13,7 @@
     <ProjectReference Include="..\MonefyWeb.Infraestructure.RepositoryWebPage\MonefyWeb.Infraestructure.RepositoryWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.Infraestructure.ServiceAgentsWebPage\MonefyWeb.Infraestructure.ServiceAgentsWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.Utils\MonefyWeb.Transversal.Utils.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.WebMappers\MonefyWeb.Transversal.WebMappers.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.WebModels\MonefyWeb.Transversal.WebModels.csproj" />
   </ItemGroup>

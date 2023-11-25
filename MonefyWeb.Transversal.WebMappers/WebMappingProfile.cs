@@ -31,6 +31,8 @@ namespace MonefyWeb.Transversal.WebMappers
 
             CreateMap<UserLoginResponseDto, UserLoginViewModel>().ReverseMap();
 
+            CreateMap<UserRegisterResponseDto, UserRegisterViewModel>().ReverseMap();
+
         }
     }
 }

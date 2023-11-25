@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using MonefyWeb.Application.ModelsWebPage.ViewModels;
 using MonefyWeb.Application.WebPage.Models;
 using MonefyWeb.Transversal.Models;
@@ -8,11 +9,14 @@ namespace MonefyWeb.Application.WebPage.Controllers
     public class LoginController : Controller
     {
         private readonly IUserService _service;
+        private readonly IMemoryCache _memory;
 
         public LoginController(
-            IUserService _service
+            IUserService _service,
+            IMemoryCache _memory
         ) {
             this._service = _service;
+            this._memory = _memory;
         }
 
         public IActionResult Login()
@@ -32,9 +36,12 @@ namespace MonefyWeb.Application.WebPage.Controllers
                 });
 
                 if (loginResponse == null || loginResponse.Status == false)
-                    return View();
+                    return RedirectToAction("Login", "Login");
 
-                 return RedirectToAction("Index", "AccountChart");
+                _memory.Set("UserId", loginResponse.UserId);
+                _memory.Set("AccountId", loginResponse.AccountId);
+
+                return RedirectToAction("Index", "AccountChart");
             }
             return BadRequest(ModelState);
         }

@@ -10,15 +10,18 @@ namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
     {
         private readonly IUserDomain _domain;
         private readonly IMapper _mapper;
+        private readonly IEncryptUtils _encryptUtils;
 
-        public UserService(IUserDomain _domain, IMapper _mapper)
+        public UserService(IUserDomain _domain, IMapper _mapper, IEncryptUtils encrypt)
         {
             this._domain = _domain;
             this._mapper = _mapper;
+            this._encryptUtils = encrypt;
         }
 
         public async Task<UserLoginViewModel> LoginUser(LoginRequestDto request)
         {
+            request.Password = _encryptUtils.ComputeSHA256Hash(request.Password);
             var result = _mapper.Map<UserLoginViewModel>(await _domain.Login(request));
             return result;
         }

@@ -30,10 +30,6 @@ namespace MonefyWeb.Infraestructure.ServiceAgentsWebPage.Implementations
             if (PostRegisterResponse != null)
             {
                 response = JsonConvert.DeserializeObject<UserLoginResponseDto>(PostRegisterResponse);
-                if (response.Status == false)
-                {
-
-                }
             }
             return response;
         }
