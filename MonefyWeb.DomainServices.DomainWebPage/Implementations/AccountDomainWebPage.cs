@@ -51,5 +51,10 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
             }
             return chartDataViewModel;
         }
+
+        public async Task<MovementDetailBe> GetMovementDetailData(long userId, long accountId)
+        {
+            return _mapper.Map<MovementDetailBe>(await _repository.GetMovementDetailData(userId, accountId));
+        }
     }
 }

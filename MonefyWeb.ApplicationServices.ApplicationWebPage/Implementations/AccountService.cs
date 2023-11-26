@@ -26,5 +26,10 @@ namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
         {
             return await _domain.GetChartData(UserId, AccountId);
         }
+
+        public async Task<MovementDetailViewModel> GetMovementDetailData(long userId, long accountId)
+        {
+            return _mapper.Map<MovementDetailViewModel>(await _domain.GetMovementDetailData(userId, accountId));
+        }
     }
 }

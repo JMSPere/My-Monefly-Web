@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MonefyWeb.Application.WebPage.Controllers;
+﻿using MonefyWeb.Application.WebPage.Controllers;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Contracts;
 using MonefyWeb.DistributedServices.Models.Models.Users;
 using MonefyWeb.Transversal.Models;

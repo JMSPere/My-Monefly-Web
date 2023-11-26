@@ -7,5 +7,6 @@ namespace MonefyWeb.Application.WebPage.Controllers
     {
         Task<AddMovementResponseViewModel> AddMovement(MovementRequestDto movementRequestDto);
         Task<ChartDataViewModel> GetChartData(long UserId, long AccountId);
+        Task<MovementDetailViewModel> GetMovementDetailData(long userId, long accountId);
     }
 }

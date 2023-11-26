@@ -8,5 +8,6 @@ namespace MonefyWeb.Infraestructure.RepositoryWebPage.Contracts
     {
         Task<AddMovementResponseDto> AddMovement(MovementRequestDto movementRequestDto);
         Task<ChartDataDto> GetChartData(long UserId, long AccountId);
+        Task<MovementDetailDto> GetMovementDetailData(long userId, long accountId);
     }
 }
