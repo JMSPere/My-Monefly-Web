@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
 using MonefyWeb.Application.ModelsWebPage.Models;
+using MonefyWeb.Application.ModelsWebPage.ViewModels;
+using MonefyWeb.Application.WebPage.Controllers;
+using MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations;
+using MonefyWeb.DistributedServices.Models.Models.Users;
 using MonefyWeb.DomainEntities.WebBe;
 using MonefyWeb.Infrastructure.DataModels.Redis;
 using MonefyWeb.Infrastructure.DataModels.Response;
+using MonefyWeb.Transversal.Models;
 
 namespace MonefyWeb.Transversal.WebMappers
 {
@@ -13,6 +18,21 @@ namespace MonefyWeb.Transversal.WebMappers
             CreateMap<CryptoDataBe, CryptoDataResponse>().ReverseMap();
 
             CreateMap<TimeSeriesData, RedisCryptoData>().ReverseMap();
+
+            CreateMap<ChartDataDto, ChartDataViewModel>().ReverseMap();
+
+            CreateMap<AddMovementResponseBe, AddMovementResponseDto>().ReverseMap();
+
+            CreateMap<AddMovementResponseBe, AddMovementResponseViewModel>().ReverseMap();
+
+            CreateMap<LoginRequestDto, UserLoginBe>().ReverseMap();
+
+            CreateMap<UserLoginBe, UserLoginViewModel>().ReverseMap();
+
+            CreateMap<UserLoginResponseDto, UserLoginViewModel>().ReverseMap();
+
+            CreateMap<UserRegisterResponseDto, UserRegisterViewModel>().ReverseMap();
+
         }
     }
 }

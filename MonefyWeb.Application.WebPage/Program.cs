@@ -1,10 +1,15 @@
+
 using AutoMapper;
+using MonefyWeb.Application.WebPage.Controllers;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Contracts;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations;
+using MonefyWeb.DomainServices.DomainWebPage;
 using MonefyWeb.DomainServices.DomainWebPage.Contracts;
 using MonefyWeb.DomainServices.DomainWebPage.Implementations;
+using MonefyWeb.DomainServices.RepositoryContracts.Contracts;
 using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
 using MonefyWeb.Infraestructure.RepositoryWebPage.Implementations;
+using MonefyWeb.Infraestructure.ServiceAgentsWebPage.Implementations;
 using MonefyWeb.Transversal.WebMappers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,13 +20,24 @@ builder.Services.AddControllersWithViews();
 // ------------------------------------------------------------------------------------------------
 builder.Services.AddHttpClient();
 
-// Contracts
+// Contracts - Application
 // ------------------------------------------------------------------------------------------------
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICryptoAppService, CryptoAppService>();
-builder.Services.AddScoped<ICryptoLogic, CryptoLogic>();
 builder.Services.AddScoped<IEncryptUtils, EncryptUtils>();
+// Contracts - Domain
+// ------------------------------------------------------------------------------------------------
+builder.Services.AddScoped<IAccountDomainWebPage, AccountDomainWebPage>();
+builder.Services.AddScoped<IUserDomain, UserDomain>();
+builder.Services.AddScoped<ICryptoLogic, CryptoLogic>();
+// Contracts - Infraestructure
+// ------------------------------------------------------------------------------------------------
 builder.Services.AddScoped<IRedisCache, RedisCache>();
 builder.Services.AddScoped<IAlphaVantage, AlphaVantage>();
+builder.Services.AddScoped<IApiServiceAgent, ApiServiceAgent>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Mapper Configurator
 // ------------------------------------------------------------------------------------------------

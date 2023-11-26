@@ -9,6 +9,10 @@ public class CryptoViewerController : Controller
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ICryptoAppService _cryptoAppService;
 
+    private readonly string apiVersion = "v2";
+    private readonly string baseUrl = "https://moneflyapi.azurewebsites.net/api/";
+    // private readonly string baseUrl = "https://localhost:7006/api/";
+
     public CryptoViewerController(IMemoryCache memoryCache, IHttpClientFactory httpClientFactory, ICryptoAppService cryptoAppService)
     {
         _memoryCache = memoryCache;
@@ -18,17 +22,23 @@ public class CryptoViewerController : Controller
 
     public async Task<ActionResult> Index()
     {
-        List<CryptoDataResponse> cryptoDataList = await GenerateCryptoDataList();
-        if (cryptoDataList is null || cryptoDataList.Count == 0)
-            return View("Error");
-        ViewBag.Crypto = cryptoDataList;
-        return View();
+        if (_memoryCache.TryGetValue<long>("UserId", out var userId) &&
+                _memoryCache.TryGetValue<long>("AccountId", out var accountId))
+        {
+            var cryptoDataList = await GenerateCryptoDataList();
+            if (cryptoDataList is null || cryptoDataList.Count == 0)
+                return View("Error");
+            ViewBag.Crypto = cryptoDataList;
+            return View();
+        } else {
+            return RedirectToAction("Login", "Login");
+        }
+            
     }
 
     public async Task<List<CryptoDataResponse>> GenerateCryptoDataList()
     {
-        List<CryptoDataResponse> cryptoDataList = new List<CryptoDataResponse>();
-        cryptoDataList = await _cryptoAppService.GetCryptoData();
+        var cryptoDataList = await _cryptoAppService.GetCryptoData();
         return cryptoDataList;
     }
 }

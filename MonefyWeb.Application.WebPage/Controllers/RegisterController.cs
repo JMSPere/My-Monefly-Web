@@ -1,31 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
+using MonefyWeb.Application.ModelsWebPage.ViewModels;
 using MonefyWeb.Application.WebPage.Models;
-using MonefyWeb.ApplicationServices.ApplicationWebPage.Contracts;
-using Newtonsoft.Json;
-using System.Text;
+using MonefyWeb.Transversal.Models;
 
 namespace MonefyWeb.Application.WebPage.Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly ILogger<RegisterController> _logger;
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IMemoryCache _memoryCache;
-        private readonly IEncryptUtils _encrypt;
-
-        private readonly string apiVersion = "v2";
+        private readonly IUserService _service;
 
         public RegisterController(
-            ILogger<RegisterController> logger,
-            IHttpClientFactory httpClientFactory,
-            IMemoryCache memoryCache,
-            IEncryptUtils _encrypt)
-        {
-            _logger = logger;
-            _httpClientFactory = httpClientFactory;
-            _memoryCache = memoryCache;
-            this._encrypt = _encrypt;
+            IUserService _service
+        ){
+            this._service = _service;
         }
 
         public ActionResult Index()
@@ -38,32 +25,17 @@ namespace MonefyWeb.Application.WebPage.Controllers
         {
             if (ModelState.IsValid)
             {
-                var httpClient = _httpClientFactory.CreateClient();
-                var registerUrl = $"https://localhost:7006/api/{apiVersion}/User/Register";
-
-                var requestBody = new
+                UserRegisterViewModel loginResponse = await _service.RegisterUser(new RegisterRequestDto
                 {
-                    name = model.Username,
-                    password = _encrypt.ComputeSHA256Hash(model.Password),
-                    email = model.Email,
-                };
+                    Name = model.Username,
+                    Email = model.Email,
+                    Password = model.Password
+                });
 
-                var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                if (loginResponse == null || loginResponse.Status == false)
+                    return View();
 
-                var response = await httpClient.PostAsync(registerUrl, content);
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-
-                var registerResponse = JsonConvert.DeserializeObject<UserRegisterResponseDto>(jsonResponse);
-
-
-                if (response.IsSuccessStatusCode && registerResponse.Status == true)
-                {
-                    return RedirectToAction("Login", "Login");
-                }
-                else
-                {
-                    return View("Error");
-                }
+                return RedirectToAction("Index", "AccountChart");
             }
 
             return BadRequest(ModelState);

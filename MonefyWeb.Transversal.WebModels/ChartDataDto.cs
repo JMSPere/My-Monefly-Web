@@ -1,6 +1,6 @@
-﻿namespace MonefyWeb.Application.ModelsWebPage.ViewModels
+﻿namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
 {
-    public class ChartDataViewModel
+    public class ChartDataDto
     {
         public decimal TotalIncomes { get; set; }
         public List<KeyValuePair<long, string>> IncomeCategories { get; set; }
