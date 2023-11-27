@@ -1,0 +1,47 @@
+﻿@using MonefyWeb.Application.ModelsWebPage.ViewModels
+@model MonefyWeb.Application.ModelsWebPage.ViewModels.MovementDetailViewModel
+
+@{
+    Layout = null;
+    var movementJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MovementDetailViewModel);
+    var movement = Newtonsoft.Json.JsonConvert.DeserializeObject<MovementDetailViewModel>(movementJson);
+}
+
+<!DOCTYPE html> <!-- Agregar la etiqueta DOCTYPE -->
+<html>
+<head>
+    <title>Accordion Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    @foreach (var sectionItem in movement.Sections)
+    {
+        <h2>@sectionItem.Name</h2>
+        <div id="@sectionItem.Name" class="accordion">
+            @foreach (var movementItem in sectionItem.Movements)
+            {
+                <div class="card">
+                    <div class="card-header custom-card-header">
+                        <a class="card-link" data-toggle="collapse" href="#@movementItem.DetailInfo">
+                            @movementItem.DetailInfo
+                        </a>
+                    </div>
+                    <div id="@movementItem.DetailInfo" class="collapse">
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

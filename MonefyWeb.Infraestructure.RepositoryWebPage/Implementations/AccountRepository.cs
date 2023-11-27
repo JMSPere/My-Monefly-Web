@@ -104,7 +104,7 @@ namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
         public async Task<AddMovementResponseDto> AddMovement(MovementRequestDto movementRequestDto)
         {
             var result = new AddMovementResponseDto();
-            var AddMovementToAccount = $"{baseUrl}{apiVersion}/Accounnt/AddMovementToAccount";
+            var AddMovementToAccount = $"{baseUrl}{apiVersion}/Account/AddMovementToAccount";
 
             var PostMovementsResponse = await _service.PostApiAsync(AddMovementToAccount, movementRequestDto);
 
@@ -112,6 +112,21 @@ namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
             {
                 var movementResponse = JsonConvert.DeserializeObject<AddMovementResponseDto>(PostMovementsResponse);
                 result.Status = movementResponse.Status;
+            }
+            return result;
+        }
+
+        public async Task<MovementDetailDto> GetMovementDetailData(long userId, long accountId)
+        {
+            var result = new MovementDetailDto();
+            var movementDetailPoco = new GetMovementAccountPoco { UserId = userId, AccountId = accountId };
+            var movementDetalUrl = $"{baseUrl}{apiVersion}/Account/GetMovementDetailData";
+
+            var PostMovementDetalResponse = await _service.PostApiAsync(movementDetalUrl, movementDetailPoco);
+
+            if (PostMovementDetalResponse != null)
+            {
+                var movementResponse = JsonConvert.DeserializeObject<MovementDetailDto>(PostMovementDetalResponse);
             }
             return result;
         }

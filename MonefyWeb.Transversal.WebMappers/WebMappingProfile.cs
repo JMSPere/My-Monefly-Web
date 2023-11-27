@@ -2,9 +2,11 @@
 using MonefyWeb.Application.ModelsWebPage.Models;
 using MonefyWeb.Application.ModelsWebPage.ViewModels;
 using MonefyWeb.Application.WebPage.Controllers;
+using MonefyWeb.ApplicationServices.ApplicationWebPage.Contracts;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations;
 using MonefyWeb.DistributedServices.Models.Models.Users;
 using MonefyWeb.DomainEntities.WebBe;
+using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
 using MonefyWeb.Infrastructure.DataModels.Redis;
 using MonefyWeb.Infrastructure.DataModels.Response;
 using MonefyWeb.Transversal.Models;
@@ -32,6 +34,10 @@ namespace MonefyWeb.Transversal.WebMappers
             CreateMap<UserLoginResponseDto, UserLoginViewModel>().ReverseMap();
 
             CreateMap<UserRegisterResponseDto, UserRegisterViewModel>().ReverseMap();
+
+            CreateMap<MovementDetailViewModel, MovementDetailBe>().ReverseMap();
+
+            CreateMap<MovementDetailBe, MovementDetailDto>().ReverseMap();
 
         }
     }
