@@ -19,7 +19,7 @@ namespace MonefyWeb.Application.WebPage.Controllers
         private readonly string baseUrl = "https://moneflyapi.azurewebsites.net/api/";
         // private readonly string baseUrl = "https://localhost:7006/api/";
 
-        private static readonly Random random = new Random();
+        private static readonly Random random = new();
 
         public AccountChartController(
             ILogger<AccountChartController> logger,
@@ -37,7 +37,8 @@ namespace MonefyWeb.Application.WebPage.Controllers
         public async Task<ActionResult> Index()
         {
             if (_memoryCache.TryGetValue<long>("UserId", out var userId) &&
-                _memoryCache.TryGetValue<long>("AccountId", out var accountId))
+                _memoryCache.TryGetValue<long>("AccountId", out var accountId) && 
+                _memoryCache.TryGetValue<string>("SessionToken", out var token))
             {
                 var chartPoco = await _application.GetChartData(userId, accountId);
 
@@ -47,7 +48,6 @@ namespace MonefyWeb.Application.WebPage.Controllers
                 ViewBag.Categories = chartPoco.Categories;
                 ViewBag.IncomeCategories = chartPoco.IncomeCategories;
                 ViewBag.ExpenseCategories = chartPoco.ExpenseCategories;
-
             }
             else
             {
@@ -61,21 +61,23 @@ namespace MonefyWeb.Application.WebPage.Controllers
         {
             if (_memoryCache.TryGetValue<long>("AccountId", out var accountId))
             {
-                await _application.AddMovement(new MovementRequestDto()
+                var result = await _application.AddMovement(new MovementRequestDto()
                 {
                     AccountId = accountId,
                     Amount = model.IncomeAmount,
                     CategoryId = model.IncomeCategory,
                     Concept = model.Concept,
                     PaymentMethod = EPaymentMethod.Cash,
-                    Type = EMovementType.Add
+                    Type = EMovementType.Add,
+                    Date = model.date
                 });
+                Console.WriteLine(result.Status);
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-            return View();
+            return RedirectToAction("Index", "AccountChart");
         }
 
         [HttpPost]
@@ -83,21 +85,23 @@ namespace MonefyWeb.Application.WebPage.Controllers
         {
             if (_memoryCache.TryGetValue<long>("AccountId", out var accountId))
             {
-                await _application.AddMovement(new MovementRequestDto()
+                var result = await _application.AddMovement(new MovementRequestDto()
                 {
                     AccountId = accountId,
                     Amount = model.IncomeAmount,
                     CategoryId = model.IncomeCategory,
                     Concept = model.Concept,
                     PaymentMethod = EPaymentMethod.Cash,
-                    Type = EMovementType.Substract
+                    Type = EMovementType.Substract,
+                    Date = model.date
                 });
+                Console.WriteLine(result.Status);
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-            return View();
+            return RedirectToAction("Index", "AccountChart");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

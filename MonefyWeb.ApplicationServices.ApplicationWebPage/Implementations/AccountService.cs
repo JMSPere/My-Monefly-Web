@@ -29,7 +29,32 @@ namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
 
         public async Task<MovementDetailViewModel> GetMovementDetailData(long userId, long accountId)
         {
-            return _mapper.Map<MovementDetailViewModel>(await _domain.GetMovementDetailData(userId, accountId));
+            var result = await _domain.GetMovementDetailData(userId, accountId);
+
+            var groupedMovements = result.GroupBy(r => r.CategoryId);
+
+            var sections = new List<MovementSectionViewModel>();
+            foreach (var group in groupedMovements)
+            {
+                var section = new MovementSectionViewModel
+                {
+                    Name = group.First().CategoryName, 
+                    Icon = string.Empty,
+                    Movements = group.Select(item => new MovementViewModel
+                    {
+                        DetailInfo = $"{item.MovementDate} - {item.Amount:C}" 
+                    }).ToList()
+                };
+                sections.Add(section);
+            }
+
+            var viewModel = new MovementDetailViewModel
+            {
+                Sections = sections
+            };
+
+            return viewModel;
         }
+
     }
 }

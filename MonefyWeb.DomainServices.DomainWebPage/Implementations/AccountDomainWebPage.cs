@@ -52,9 +52,10 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
             return chartDataViewModel;
         }
 
-        public async Task<MovementDetailBe> GetMovementDetailData(long userId, long accountId)
+        public async Task<List<MovementDetailBe>> GetMovementDetailData(long userId, long accountId)
         {
-            return _mapper.Map<MovementDetailBe>(await _repository.GetMovementDetailData(userId, accountId));
+            var movements = await _repository.GetMovementDetailData(userId, accountId);
+            return _mapper.Map<List<MovementDetailBe>>(movements);
         }
     }
 }

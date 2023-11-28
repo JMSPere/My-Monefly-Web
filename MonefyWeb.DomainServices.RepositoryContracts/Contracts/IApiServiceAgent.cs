@@ -2,7 +2,7 @@
 {
     public interface IApiServiceAgent
     {
-        Task<string> GetApiAsync(string apiUrl);
-        Task<string> PostApiAsync(string apiUrl, object data);
+        Task<string> GetApiAsync(string apiUrl, string token);
+        Task<string> PostApiAsync(string apiUrl, string token, object data);
     }
 }

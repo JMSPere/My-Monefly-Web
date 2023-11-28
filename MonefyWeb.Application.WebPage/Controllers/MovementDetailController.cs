@@ -58,10 +58,12 @@ namespace MonefyWeb.Application.WebPage.Controllers
                     }
                 }
             };
+
             if (_memoryCache.TryGetValue<long>("UserId", out var userId) &&
                 _memoryCache.TryGetValue<long>("AccountId", out var accountId))
             {
                 movementDetailViewModel = await _application.GetMovementDetailData(userId, accountId);
+
             } else {
                 return RedirectToAction("Login", "Login");
             }

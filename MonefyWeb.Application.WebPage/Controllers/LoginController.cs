@@ -21,6 +21,9 @@ namespace MonefyWeb.Application.WebPage.Controllers
 
         public IActionResult Login()
         {
+            _memory.Set("UserId", 1L);
+            _memory.Set("AccountId", 1L);
+            _memory.Set("SessionToken", "tokensillu");
             return View();
         }
 
@@ -35,11 +38,13 @@ namespace MonefyWeb.Application.WebPage.Controllers
                     Password = model.Password
                 });
 
-                if (loginResponse == null || loginResponse.Status == false)
+                if (loginResponse == null
+                    || loginResponse.Status == false)
                     return RedirectToAction("Login", "Login");
 
                 _memory.Set("UserId", loginResponse.UserId);
                 _memory.Set("AccountId", loginResponse.AccountId);
+                _memory.Set("SessionToken", loginResponse.Token);
 
                 return RedirectToAction("Index", "AccountChart");
             }
