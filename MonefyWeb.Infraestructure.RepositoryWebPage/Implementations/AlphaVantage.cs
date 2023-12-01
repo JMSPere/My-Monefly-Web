@@ -7,38 +7,36 @@ namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
 {
     public class AlphaVantage : IAlphaVantage
     {
-        public readonly IHttpClientFactory _httpClientFactory;
+        private readonly Transversal.Utils.ILogger _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string baseUrlFirstPart = $"https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=";
+        private readonly string baseUrlLastPart = $"&market=USD&apikey=IRLZBVARVMPQMJ45";
 
         public AlphaVantage() { }
 
-        public AlphaVantage(IHttpClientFactory httpClientFactory)
+        public AlphaVantage(IHttpClientFactory httpClientFactory, Transversal.Utils.ILogger logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
         }
 
         public async Task<AlphaVantageResponse> GetCryptoCurrencyData(ECryptoCurrency currencyCode)
         {
-            var currencyCodeText = currencyCode.ToString();
-            var httpClient = _httpClientFactory.CreateClient();
-            //Development and testing URL
-            //var queryUrl = "https://my-json-server.typicode.com/JMSPere/mockApiVantage/db";
-            //var response = await httpClient.GetAsync(queryUrl);
-            //Final URL
-            var queryUrl = $"https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol={currencyCodeText}&market=USD&apikey=IRLZBVARVMPQMJ45";
-            var response = await httpClient.GetAsync(queryUrl);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
+                var currencyCodeText = currencyCode.ToString();
+                var httpClient = _httpClientFactory.CreateClient();
+                var queryUrl = $"{baseUrlFirstPart}{currencyCodeText}{baseUrlLastPart}";
+                var response = await httpClient.GetAsync(queryUrl);
+
                 string cryptoJsonResponse = await response.Content.ReadAsStringAsync();
                 var apiResponse = JsonConvert.DeserializeObject<AlphaVantageResponse>(cryptoJsonResponse);
-
-                // Imprimir los valores en la consola
-                string formattedJson = JsonConvert.SerializeObject(apiResponse, Formatting.Indented);
                 return apiResponse;
             }
-            else
+            catch (Exception ex)
             {
-                throw new InvalidOperationException("Bad request!");
+                _logger.Error(ex.Message);
+                return new AlphaVantageResponse();
             }
         }
     }
