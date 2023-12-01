@@ -1,47 +1,58 @@
-﻿@using MonefyWeb.Application.ModelsWebPage.ViewModels
-@model MonefyWeb.Application.ModelsWebPage.ViewModels.MovementDetailViewModel
-
+﻿@using MonefyWeb.Application.ModelsWebPage.ViewModels;
 @{
-    Layout = null;
-    var movementJson = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MovementDetailViewModel);
-    var movement = Newtonsoft.Json.JsonConvert.DeserializeObject<MovementDetailViewModel>(movementJson);
+    var movementData = ViewBag.MovementData as MovementDetailViewModel;
 }
 
-<!DOCTYPE html> <!-- Agregar la etiqueta DOCTYPE -->
-<html>
-<head>
-    <title>Accordion Example</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+<style>
+    body {
+        background: -webkit-linear-gradient(to top, #1b263b 0%, #415a77 100%);
+        background-image: linear-gradient(to top, #1b263b 0%, #415a77 100%);
+        color: white;
+        margin: 0;
+        padding: 0;
+    }
+    li, button {
+        color: #000
+    }
+</style>
 
-<div class="container mt-5">
-    @foreach (var sectionItem in movement.Sections)
-    {
-        <h2>@sectionItem.Name</h2>
-        <div id="@sectionItem.Name" class="accordion">
-            @foreach (var movementItem in sectionItem.Movements)
-            {
-                <div class="card">
-                    <div class="card-header custom-card-header">
-                        <a class="card-link" data-toggle="collapse" href="#@movementItem.DetailInfo">
-                            @movementItem.DetailInfo
-                        </a>
-                    </div>
-                    <div id="@movementItem.DetailInfo" class="collapse">
-                        <div class="card-body">
+<div class="container">
+    <h1>Movements</h1>
 
-                        </div>
+    <div id="accordion">
+        @for (int i = 0; i < movementData.Sections.Count; i++)
+        {
+            <div class="card" style="margin-top:7px">
+                <div class="card-header" id="heading@i">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse@i" aria-expanded="true" aria-controls="collapse@i">
+                            @movementData.Sections[i].Name
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapse@i" class="collapse show" aria-labelledby="heading@i" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            @foreach (var movement in movementData.Sections[i].Movements)
+                            {
+                                <li>@movement.DetailInfo</li>
+                            }
+                        </ul>
                     </div>
                 </div>
-            }
-        </div>
-    }
+            </div>
+        }
+    </div>
+
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</body>
-</html>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+}

@@ -2,6 +2,7 @@
 using MonefyWeb.DomainServices.DomainWebPage.Contracts;
 using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
 using MonefyWeb.Infrastructure.DataModels.Response;
+using MonefyWeb.Transversal.Aspects;
 using MonefyWeb.Transversal.WebMappers;
 using MonefyWeb.Transversal.WebModels;
 using Newtonsoft.Json;
@@ -12,20 +13,24 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
     {
         private readonly IAlphaVantage _alphaVantage;
         private readonly IRedisCache _redisCache;
+        private readonly Transversal.Utils.ILogger _logger;
 
-        public CryptoLogic(IAlphaVantage alphaVantage, IRedisCache redisCache)
+        [Log]
+        public CryptoLogic(IAlphaVantage alphaVantage, IRedisCache redisCache, Transversal.Utils.ILogger _logger)
         {
             _alphaVantage = alphaVantage;
             _redisCache = redisCache;
+            this._logger = _logger;
         }
 
+        [Log]
         public TimeSeriesEntry? GetTimeSeriesByDay(DateTime day, AlphaVantageResponse response)
         {
             if (response == null)
             {
                 throw new ArgumentNullException();
             }
-            var key = day.ToString("yyyy-MM-dd");
+            var key = day.ToString(Properties.Resources.DatePattern);
             if (response.TimeSeries.ContainsKey(key))
             {
                 return new TimeSeriesEntry
@@ -40,6 +45,7 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
             }
         }
 
+        [Log]
         public AlphaVantageResponse GetLastTwoDays(AlphaVantageResponse response)
         {
             try
@@ -89,6 +95,7 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
         }
 
         //TODO separate responsability
+        [Log]
         public async Task<List<CryptoDataBe>> GetCryptoData()
         {
             var listAlphaVantage = new List<AlphaVantageResponse>();
@@ -131,35 +138,30 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
             return cryptoDataBeList.OrderByDescending(o => o.CurrencyChanged).ToList();
         }
 
+        [Log]
         public bool HasPriceRisen(AlphaVantageResponse alphaVantageResponse)
         {
-            try
+            var lastTwoDays = GetLastTwoDays(alphaVantageResponse);
+
+            if (lastTwoDays == null)
             {
-                var lastTwoDays = GetLastTwoDays(alphaVantageResponse);
-
-                if (lastTwoDays == null)
-                {
-                    return false;
-                }
-
-                var lastDay = lastTwoDays.TimeSeries.FirstOrDefault();
-                var previousDay = lastTwoDays.TimeSeries.LastOrDefault();
-
-                if (decimal.Parse(lastDay.Value.CloseUSD) > decimal.Parse(previousDay.Value.CloseUSD))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
-            catch (Exception ex)
+
+            var lastDay = lastTwoDays.TimeSeries.FirstOrDefault();
+            var previousDay = lastTwoDays.TimeSeries.LastOrDefault();
+
+            if (decimal.Parse(lastDay.Value.CloseUSD) > decimal.Parse(previousDay.Value.CloseUSD))
             {
-                throw ex;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
+        [Log]
         public decimal ChangePercentage(AlphaVantageResponse alphaVantageResponse)
         {
             try

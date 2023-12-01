@@ -10,44 +10,44 @@ namespace MonefyWeb.Application.WebPage.Controllers
 {
     public class AccountChartController : Controller
     {
-        private readonly ILogger<AccountChartController> _logger;
+        private readonly Transversal.Utils.ILogger _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IAccountService _application;
         private readonly IMemoryCache _memoryCache;
 
         private readonly string apiVersion = "v2";
         private readonly string baseUrl = "https://moneflyapi.azurewebsites.net/api/";
-        // private readonly string baseUrl = "https://localhost:7006/api/";
 
-        private static readonly Random random = new Random();
+        private static readonly Random random = new();
 
         public AccountChartController(
-            ILogger<AccountChartController> logger,
+            Transversal.Utils.ILogger _logger,
             IAccountService _application,
-            IHttpClientFactory httpClientFactory,
-            IMemoryCache memory
+            IHttpClientFactory _httpClientFactory,
+            IMemoryCache _memoryCache
         )
         {
-            _logger = logger;
-            _httpClientFactory = httpClientFactory;
+            this._logger = _logger;
+            this._httpClientFactory = _httpClientFactory;
             this._application = _application;
-            _memoryCache = memory;
+            this._memoryCache = _memoryCache;
         }
 
         public async Task<ActionResult> Index()
         {
             if (_memoryCache.TryGetValue<long>("UserId", out var userId) &&
-                _memoryCache.TryGetValue<long>("AccountId", out var accountId))
+                _memoryCache.TryGetValue<long>("AccountId", out var accountId) && 
+                _memoryCache.TryGetValue<string>("SessionToken", out var token))
             {
                 var chartPoco = await _application.GetChartData(userId, accountId);
 
                 ViewBag.Incomes = chartPoco.TotalIncomes;
                 ViewBag.Expenses = chartPoco.TotalExpenses;
+                ViewBag.Balance = chartPoco.Balance;
                 ViewBag.ChartData = JsonConvert.SerializeObject(chartPoco.ChartData);
                 ViewBag.Categories = chartPoco.Categories;
                 ViewBag.IncomeCategories = chartPoco.IncomeCategories;
                 ViewBag.ExpenseCategories = chartPoco.ExpenseCategories;
-
             }
             else
             {
@@ -61,21 +61,23 @@ namespace MonefyWeb.Application.WebPage.Controllers
         {
             if (_memoryCache.TryGetValue<long>("AccountId", out var accountId))
             {
-                await _application.AddMovement(new MovementRequestDto()
+                var result = await _application.AddMovement(new MovementRequestDto()
                 {
                     AccountId = accountId,
                     Amount = model.IncomeAmount,
                     CategoryId = model.IncomeCategory,
                     Concept = model.Concept,
                     PaymentMethod = EPaymentMethod.Cash,
-                    Type = EMovementType.Add
+                    Type = EMovementType.Add,
+                    Date = model.date
                 });
+                Console.WriteLine(result.Status);
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-            return View();
+            return RedirectToAction("Index", "AccountChart");
         }
 
         [HttpPost]
@@ -83,21 +85,23 @@ namespace MonefyWeb.Application.WebPage.Controllers
         {
             if (_memoryCache.TryGetValue<long>("AccountId", out var accountId))
             {
-                await _application.AddMovement(new MovementRequestDto()
+                var result = await _application.AddMovement(new MovementRequestDto()
                 {
                     AccountId = accountId,
                     Amount = model.IncomeAmount,
                     CategoryId = model.IncomeCategory,
                     Concept = model.Concept,
                     PaymentMethod = EPaymentMethod.Cash,
-                    Type = EMovementType.Substract
+                    Type = EMovementType.Substract,
+                    Date = model.date
                 });
+                Console.WriteLine(result.Status);
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-            return View();
+            return RedirectToAction("Index", "AccountChart");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -10,5 +10,6 @@ namespace MonefyWeb.DistributedServices.Models.Models.Movements
         public EMovementType Type { get; set; }
         public EPaymentMethod PaymentMethod { get; set; }
         public int CategoryId { get; set; }
+        public DateTime Date { get; set; } 
     }
 }

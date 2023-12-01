@@ -12,14 +12,17 @@
 
 <style>
     body {
-        background-color: #778da9;
+        background: -webkit-linear-gradient(to top, #1b263b 0%, #415a77 100%);
+        background-image: linear-gradient(to top, #1b263b 0%, #415a77 100%);
         color: white;
+        margin: 0;
+        padding: 0;
     }
 
     .panel-container {
         background-color: #415a77;
         padding: 20px;
-        width: 200px;
+        width: 300px;
         margin-left: 20px;
         margin-right: 20px;
         border-radius: 10px;
@@ -107,9 +110,14 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <div class="text-center">
-    <h1 class="display-4">Monefy Web Page</h1>
+    <h1 class="display-4" style="color:#fff">Monefy Web Page</h1>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -210,6 +218,10 @@
                                     <input type="hidden" id="selectedIncomeCategory" name="IncomeCategory" value="">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="date" style="color:black;">Date:</label>
+                                <input type="date" class="form-control" id="date" name="Date">
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" id="submitIncome"
@@ -249,6 +261,10 @@
                                     </select>
                                     <input type="hidden" id="selectedExpenseCategory" name="ExpenseCategory" value="">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="date" style="color:black;">Date:</label>
+                                <input type="date" class="form-control" id="date" name="Date">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

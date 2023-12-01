@@ -10,7 +10,11 @@ using MonefyWeb.DomainServices.RepositoryContracts.Contracts;
 using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
 using MonefyWeb.Infraestructure.RepositoryWebPage.Implementations;
 using MonefyWeb.Infraestructure.ServiceAgentsWebPage.Implementations;
+using MonefyWeb.Transversal.Utils;
+using MonefyWeb.Transversal.Utils.Chart;
+using MonefyWeb.Transversal.Utils.Token;
 using MonefyWeb.Transversal.WebMappers;
+using ILogger = MonefyWeb.Transversal.Utils.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +43,20 @@ builder.Services.AddScoped<IApiServiceAgent, ApiServiceAgent>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<ITokenUtils, TokenUtils>();
+builder.Services.AddScoped<IChartUtils, ChartUtils>();
+builder.Services.AddScoped<ILogger, Logger>();
+
+// Configuration - Controller
+// ------------------------------------------------------------------------------------------------
+
+IConfiguration configuration = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json")
+        .Build();
+builder.Services.AddScoped<ITokenConfiguration, TokenConfiguration>();
+
+
 // Mapper Configurator
 // ------------------------------------------------------------------------------------------------
 var mappingConfig = new MapperConfiguration(mc =>
@@ -51,6 +69,28 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<WebMappingHelper>();
 
 var app = builder.Build();
+
+app.Use((context, next) =>
+{
+    context.Response.OnStarting(() =>
+    {
+        context.Response.Headers.Remove("Server");
+        return Task.CompletedTask;
+    });
+
+    return next();
+});
+
+app.Use((context, next) =>
+{
+    context.Response.OnStarting(() =>
+    {
+        context.Response.Headers.Remove("X-Powered-By");
+        return Task.CompletedTask;
+    });
+
+    return next();
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

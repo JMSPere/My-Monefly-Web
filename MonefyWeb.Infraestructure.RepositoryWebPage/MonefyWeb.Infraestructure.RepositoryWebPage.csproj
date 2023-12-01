@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="NRedisStack" Version="0.10.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.7.4" />
@@ -15,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MonefyWeb.Infraestructure.ServiceAgentsWebPage\MonefyWeb.Infraestructure.ServiceAgentsWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.Utils\MonefyWeb.Transversal.Utils.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.WebModels\MonefyWeb.Transversal.WebModels.csproj" />
     <ProjectReference Include="..\MonefyWeb.Utils.ServiceAgents\MonefyWeb.Utils.ServiceAgents.csproj" />
   </ItemGroup>

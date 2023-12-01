@@ -13,9 +13,25 @@
     <ProjectReference Include="..\MonefyWeb.Infraestructure.RepositoryWebPage\MonefyWeb.Infraestructure.RepositoryWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.Infraestructure.ServiceAgentsWebPage\MonefyWeb.Infraestructure.ServiceAgentsWebPage.csproj" />
     <ProjectReference Include="..\MonefyWeb.Infrastructure.DataModels\MonefyWeb.Infrastructure.DataModels.csproj" />
+    <ProjectReference Include="..\MonefyWeb.Transversal.Aspects\MonefyWeb.Transversal.Aspects.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.Utils\MonefyWeb.Transversal.Utils.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.WebMappers\MonefyWeb.Transversal.WebMappers.csproj" />
     <ProjectReference Include="..\MonefyWeb.Transversal.WebModels\MonefyWeb.Transversal.WebModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

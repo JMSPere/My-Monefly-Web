@@ -9,5 +9,6 @@
         public decimal ExpenseAmount { get; set; }
         public int ExpenseId { get; set; }
         public int ExpenseCategory { get; set; }
+        public DateTime date { get; set; }
     }
 }
