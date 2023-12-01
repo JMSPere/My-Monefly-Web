@@ -7,8 +7,6 @@ using MonefyWeb.Infraestructure.RepositoryWebPage.Implementations;
 using MonefyWeb.Transversal.Models;
 using MonefyWeb.Transversal.Utils.Token;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RTools_NTS.Util;
 
 namespace MonefyWeb.Infraestructure.ServiceAgentsWebPage.Implementations
 {

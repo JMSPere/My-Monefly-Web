@@ -1,6 +1,5 @@
 
 using AutoMapper;
-using MonefyWeb.Application.ModelsWebPage;
 using MonefyWeb.Application.WebPage.Controllers;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Contracts;
 using MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations;

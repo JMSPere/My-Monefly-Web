@@ -10,28 +10,27 @@ namespace MonefyWeb.Application.WebPage.Controllers
 {
     public class AccountChartController : Controller
     {
-        private readonly ILogger<AccountChartController> _logger;
+        private readonly Transversal.Utils.ILogger _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IAccountService _application;
         private readonly IMemoryCache _memoryCache;
 
         private readonly string apiVersion = "v2";
         private readonly string baseUrl = "https://moneflyapi.azurewebsites.net/api/";
-        // private readonly string baseUrl = "https://localhost:7006/api/";
 
         private static readonly Random random = new();
 
         public AccountChartController(
-            ILogger<AccountChartController> logger,
+            Transversal.Utils.ILogger _logger,
             IAccountService _application,
-            IHttpClientFactory httpClientFactory,
-            IMemoryCache memory
+            IHttpClientFactory _httpClientFactory,
+            IMemoryCache _memoryCache
         )
         {
-            _logger = logger;
-            _httpClientFactory = httpClientFactory;
+            this._logger = _logger;
+            this._httpClientFactory = _httpClientFactory;
             this._application = _application;
-            _memoryCache = memory;
+            this._memoryCache = _memoryCache;
         }
 
         public async Task<ActionResult> Index()
@@ -44,6 +43,7 @@ namespace MonefyWeb.Application.WebPage.Controllers
 
                 ViewBag.Incomes = chartPoco.TotalIncomes;
                 ViewBag.Expenses = chartPoco.TotalExpenses;
+                ViewBag.Balance = chartPoco.Balance;
                 ViewBag.ChartData = JsonConvert.SerializeObject(chartPoco.ChartData);
                 ViewBag.Categories = chartPoco.Categories;
                 ViewBag.IncomeCategories = chartPoco.IncomeCategories;

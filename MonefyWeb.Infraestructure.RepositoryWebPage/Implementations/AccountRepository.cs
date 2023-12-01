@@ -9,7 +9,6 @@ using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
 using MonefyWeb.Transversal.Models;
 using MonefyWeb.Transversal.Utils.Chart;
 using Newtonsoft.Json;
-using System;
 
 namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
 {
@@ -123,11 +122,10 @@ namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
         public async Task<List<MovementDetailDto>> GetMovementDetailData(long userId, long accountId)
         {
             var result = new List<MovementDetailDto>();
-            var movementDetailPoco = new GetMovementAccountPoco { AccountId = accountId };
             var movementDetalUrl = $"{baseUrl}{apiVersion}/Account/GetMovementDetailData?AccountId={accountId}";
             if (_memory.TryGetValue<string>("SessionToken", out var token))
             {
-                var PostMovementDetalResponse = await _service.GetApiAsync(movementDetalUrl, token);
+                var PostMovementDetalResponse = await _service.PostApiAsync(movementDetalUrl, token, null);
 
                 if (PostMovementDetalResponse != null)
                 {

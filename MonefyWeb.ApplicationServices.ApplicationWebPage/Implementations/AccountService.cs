@@ -31,18 +31,18 @@ namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
         {
             var result = await _domain.GetMovementDetailData(userId, accountId);
 
-            var groupedMovements = result.GroupBy(r => r.CategoryId);
+            var groupedMovements = result.GroupBy(r => r.CategoryName);
 
             var sections = new List<MovementSectionViewModel>();
             foreach (var group in groupedMovements)
             {
                 var section = new MovementSectionViewModel
                 {
-                    Name = group.First().CategoryName, 
+                    Name = group.First().CategoryName,
                     Icon = string.Empty,
                     Movements = group.Select(item => new MovementViewModel
                     {
-                        DetailInfo = $"{item.MovementDate} - {item.Amount:C}" 
+                        DetailInfo = $"{item.Concept} on {item.MovementDate.Day}/{item.MovementDate.Month}/{item.MovementDate.Year} - {item.Amount:C} using a {item.PaymentMethod}"
                     }).ToList()
                 };
                 sections.Add(section);
@@ -54,7 +54,7 @@ namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
             };
 
             return viewModel;
-        }
+       }
 
     }
 }
