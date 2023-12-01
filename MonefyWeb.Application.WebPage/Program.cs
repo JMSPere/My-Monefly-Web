@@ -92,12 +92,10 @@ app.Use((context, next) =>
     return next();
 });
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
+
+app.UseExceptionHandler("/Home/Error");
+app.UseHsts();
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
