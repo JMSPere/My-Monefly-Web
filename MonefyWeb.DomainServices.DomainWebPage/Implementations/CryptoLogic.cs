@@ -48,53 +48,37 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
         [Log]
         public AlphaVantageResponse GetLastTwoDays(AlphaVantageResponse response)
         {
-            try
+            if (response.TimeSeries == null)
             {
-                if (response.TimeSeries == null)
-                {
-                    return null;
-                }
-
-                int i = 1;
-                var todayTimeSeries = GetTimeSeriesByDay(DateTime.Today, response);
-                while (todayTimeSeries == null)
-                {
-                    todayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
-                    i++;
-                }
-
-                var yesterdayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
-                while (yesterdayTimeSeries == null)
-                {
-                    i++;
-                    yesterdayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
-                }
-
-                var apiResponseLastTwoDays = new AlphaVantageResponse
-                {
-                    MetaData = response.MetaData,
-                    TimeSeries = new Dictionary<string, TimeSeriesData>()
-                };
-
-                if (todayTimeSeries != null)
-                {
-                    apiResponseLastTwoDays.TimeSeries.Add(todayTimeSeries.Date, todayTimeSeries.SeriesData);
-                }
-
-                if (yesterdayTimeSeries != null)
-                {
-                    apiResponseLastTwoDays.TimeSeries.Add(yesterdayTimeSeries.Date, yesterdayTimeSeries.SeriesData);
-                }
-
-                return apiResponseLastTwoDays;
+                return null;
             }
-            catch (Exception ex)
+
+            int i = 1;
+            var todayTimeSeries = GetTimeSeriesByDay(DateTime.Today, response);
+            while (todayTimeSeries == null)
             {
-                throw ex;
+                todayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
+                i++;
             }
+
+            var yesterdayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
+            while (yesterdayTimeSeries == null)
+            {
+                i++;
+                yesterdayTimeSeries = GetTimeSeriesByDay(DateTime.Today.AddDays(-i), response);
+            }
+
+            var apiResponseLastTwoDays = new AlphaVantageResponse
+            {
+                MetaData = response.MetaData,
+                TimeSeries = new Dictionary<string, TimeSeriesData>()
+            };
+            apiResponseLastTwoDays.TimeSeries.Add(todayTimeSeries.Date, todayTimeSeries.SeriesData);
+            apiResponseLastTwoDays.TimeSeries.Add(yesterdayTimeSeries.Date, yesterdayTimeSeries.SeriesData);
+
+            return apiResponseLastTwoDays;
         }
 
-        //TODO separate responsability
         [Log]
         public async Task<List<CryptoDataBe>> GetCryptoData()
         {
@@ -129,7 +113,6 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
                 }
             }
             cryptoDataBeList = cryptoDataBeList.OrderByDescending(o => o.CurrencyChanged).ToList();
-            //TODO erase minus sign for percentages in frontend and eliminate this loop
             foreach (var cryptoDataBe in cryptoDataBeList)
             {
                 cryptoDataBe.CurrencyChanged = Math.Abs(cryptoDataBe.CurrencyChanged);
@@ -141,52 +124,29 @@ namespace MonefyWeb.DomainServices.DomainWebPage.Implementations
         [Log]
         public bool HasPriceRisen(AlphaVantageResponse alphaVantageResponse)
         {
+            var hasPriceRisen = false;
             var lastTwoDays = GetLastTwoDays(alphaVantageResponse);
-
-            if (lastTwoDays == null)
-            {
-                return false;
-            }
-
             var lastDay = lastTwoDays.TimeSeries.FirstOrDefault();
             var previousDay = lastTwoDays.TimeSeries.LastOrDefault();
 
             if (decimal.Parse(lastDay.Value.CloseUSD) > decimal.Parse(previousDay.Value.CloseUSD))
             {
-                return true;
+                hasPriceRisen = true;
             }
-            else
-            {
-                return false;
-            }
+            return hasPriceRisen;
         }
 
         [Log]
         public decimal ChangePercentage(AlphaVantageResponse alphaVantageResponse)
         {
-            try
-            {
-                var lastTwoDays = GetLastTwoDays(alphaVantageResponse);
+            var lastTwoDays = GetLastTwoDays(alphaVantageResponse);
+            var lastDay = lastTwoDays.TimeSeries.First();
+            var previousDay = lastTwoDays.TimeSeries.Last();
+            var lastDayClose = decimal.Parse(lastDay.Value.CloseUSD);
+            var previousDayClose = decimal.Parse(previousDay.Value.CloseUSD);
+            var changePercentage = (lastDayClose - previousDayClose) / previousDayClose * 100;
 
-                if (lastTwoDays == null)
-                {
-                    return 0;
-                }
-
-                var lastDay = lastTwoDays.TimeSeries.First();
-                var previousDay = lastTwoDays.TimeSeries.Last();
-
-                var lastDayClose = decimal.Parse(lastDay.Value.CloseUSD);
-                var previousDayClose = decimal.Parse(previousDay.Value.CloseUSD);
-
-                var changePercentage = (lastDayClose - previousDayClose) / previousDayClose * 100;
-
-                return changePercentage;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return changePercentage;
         }
     }
 }

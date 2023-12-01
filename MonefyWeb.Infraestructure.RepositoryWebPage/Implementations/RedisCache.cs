@@ -1,4 +1,5 @@
-﻿using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
+﻿using Microsoft.Extensions.Configuration;
+using MonefyWeb.Infraestructure.RepositoryWebPage.Contracts;
 using MonefyWeb.Infrastructure.DataModels.Response;
 using MonefyWeb.Utils.ServiceAgents;
 using NRedisStack;
@@ -11,14 +12,15 @@ namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
     {
         private readonly ConnectionMultiplexer _connectionMultiplexer;
         private readonly IDatabase _database;
+        private readonly IConfiguration _configuration;
         private readonly JsonCommands _jsonCommands;
-        //public RedisCache() { }
-        //TODO dependency injection of this layer & configuration of connection string
 
-        public RedisCache(/*IDatabase database*/)
+        private readonly string _connectionString = "RedisConnection";
+
+        public RedisCache(IConfiguration configuration)
         {
-            _connectionMultiplexer = ConnectionMultiplexer.
-                Connect("redis-18114.c282.east-us-mz.azure.cloud.redislabs.com:18114,password=8wFCMsdtbKlCgp9ThGeBdHn2kXVLL3fK");
+            _configuration = configuration;
+            _connectionMultiplexer = ConnectionMultiplexer.Connect(_configuration.GetConnectionString(_connectionString));
             _database = _connectionMultiplexer.GetDatabase();
             _jsonCommands = _database.JSON();
             _database.Ping();
@@ -50,7 +52,6 @@ namespace MonefyWeb.Infraestructure.RepositoryWebPage.Implementations
             else
                 throw new Exception("Non existent key!");
         }
-        //returns the list of timeSeriesData stored in redis for today and yesterday of each crypto currency
         public async Task<List<AlphaVantageResponse>> GetAllAsyncJson()
         {
             var alphaVantageList = new List<AlphaVantageResponse>();
