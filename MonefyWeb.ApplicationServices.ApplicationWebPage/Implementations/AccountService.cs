@@ -31,7 +31,7 @@ namespace MonefyWeb.ApplicationServices.ApplicationWebPage.Implementations
         {
             var result = await _domain.GetMovementDetailData(userId, accountId);
 
-            var groupedMovements = result.GroupBy(r => r.CategoryName);
+            var groupedMovements = result.GroupBy(r => r.CategoryId);
 
             var sections = new List<MovementSectionViewModel>();
             foreach (var group in groupedMovements)
