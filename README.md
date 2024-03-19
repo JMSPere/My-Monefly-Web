@@ -3,7 +3,7 @@ Iván Figueredo
 
 Pere Joan Mateu
 
-# Moonefy Api
+# Monefly Api
 
 See the all the [issues](https://github.com/ItsIvanPsk/Monefly-Api/issues) for a full list of proposed features (and known issues) and see the [project](https://github.com/users/ItsIvanPsk/projects/10) kanbam.
 ### Github
